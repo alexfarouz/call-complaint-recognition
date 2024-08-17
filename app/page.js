@@ -1,11 +1,10 @@
 'use client'
-import CallButtons from './components/CallButtons';
+import RecordCall from './components/RecordCall';
 
 export default function Home() {
   return (
     <div>
-      <h1>Call Classification</h1>
-      <CallButtons />  {/* No need to pass calls here */}
+      <RecordCall />  
     </div>
   );
 }

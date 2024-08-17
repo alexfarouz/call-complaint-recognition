@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import logging
 import os
-from rag import print_call_content
+from speech_to_text import convert_audio_to_text  # Import the speech-to-text function
 
 # Set up basic configuration for logging
 logging.basicConfig(level=logging.DEBUG)
@@ -13,17 +13,20 @@ CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 @app.route('/api/send-call', methods=['POST'])
 def process_call_endpoint():
-    data = request.json
-    call_content = data.get('content', '')
+    if 'audio' not in request.files:
+        return jsonify({'error': 'No audio file provided'}), 400
 
-    if not call_content:
-        return jsonify({'error': 'No call content provided'}), 400
+    audio_file = request.files['audio']
+    audio_bytes = audio_file.read()
 
     try:
-        print_call_content(call_content)
-        return jsonify({'message': 'Call content printed successfully'}), 200
+        # Convert audio file to text using the speech-to-text API
+        transcript = convert_audio_to_text(audio_bytes)
+        print(f"Transcript: {transcript}")
+
+        # For now, return only the transcript to the frontend
+        return jsonify({'transcript': transcript}), 200
     except Exception as e:
-        print(f"Error occurred: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
