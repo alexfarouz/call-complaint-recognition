@@ -3,7 +3,7 @@ from flask_cors import CORS
 import logging
 import os
 from speech_to_text import convert_audio_to_text  # Import the speech-to-text function
-from rag import classify_and_summarize_call
+from interpret_call import classify_and_summarize_call
 
 logging.basicConfig(level=logging.DEBUG)
 app = Flask(__name__)
