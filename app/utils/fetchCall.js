@@ -1,6 +1,5 @@
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
-import { db } from "../../firebase";  // Adjust the path to your firebase.js
-
+import { db } from "../../firebase";
 
 export const fetchCallIds = async () => { // Fetch all call IDs from Firestore
   try {
@@ -12,8 +11,7 @@ export const fetchCallIds = async () => { // Fetch all call IDs from Firestore
   }
 };
 
-// Fetch a specific call by ID from Firestore
-export const fetchCallById = async (callId) => {
+export const fetchCallById = async (callId) => { // Fetch a specific call by ID from Firestore
   try {
     const callDoc = await getDoc(doc(db, "complaints", callId));
     if (callDoc.exists()) {
