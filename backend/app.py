@@ -17,6 +17,7 @@ def process_call_endpoint():
         return jsonify({'error': 'No audio file provided'}), 400
 
     audio_file = request.files['audio']
+    print(audio_file)
     audio_bytes = audio_file.read()
 
     try:
