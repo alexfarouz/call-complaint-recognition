@@ -7,6 +7,7 @@ const RecordCall = () => {
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioBlob, setAudioBlob] = useState(null);
   const [audioUrl, setAudioUrl] = useState(null);
+  const [responseText, setResponseText] = useState(''); // New state variable to hold the API response
 
   useEffect(() => {
     if (!navigator.mediaDevices || !window.MediaRecorder) {
@@ -49,15 +50,23 @@ const RecordCall = () => {
 
     try {
       const result = await sendCallToBackend(audioBlob);
-      console.log('Call sent successfully:', result);
+      const parsedResult = JSON.parse(result); // Parse the response
+      
+      // Get the summary from the response
+      const summary = parsedResult.response && parsedResult.response.summary 
+        ? parsedResult.response.summary 
+        : 'No summary received';
+      setResponseText(summary);
     } catch (error) {
       console.error('Error sending call:', error);
+      setResponseText('An error occurred while processing your request.');
     }
   };
 
   const handleDeleteRecording = () => {
     setAudioBlob(null);
     setAudioUrl(null);
+    setResponseText(''); // Clear the response text when deleting the recording
   };
 
   return (
@@ -101,6 +110,14 @@ const RecordCall = () => {
           Delete Recording
         </Button>
       </div>
+      
+      {/* Display the response text */}
+      {responseText && (
+        <div style={{ marginTop: '20px' }}>
+          <h2>API Response:</h2>
+          <p>{responseText}</p>
+        </div>
+      )}
     </div>
   );
 };

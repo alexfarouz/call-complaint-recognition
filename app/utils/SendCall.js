@@ -1,33 +1,10 @@
-/*export const sendCallToBackend = async (callContent) => {
-    try {
-      const response = await fetch('http://localhost:5000/api/send-call', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ content: callContent }),
-      });
-  
-      if (!response.ok) {
-        throw new Error('Failed to send call to the backend');
-      }
-  
-      const result = await response.json();
-      console.log('Backend response:', result);
-    } catch (error) {
-      console.error('Error sending call:', error);
-      throw error;
-    }
-};*/
-
 export const sendCallToBackend = async (audioBlob) => {
   try {
-    // Create a FormData object to send the audio file
-    const formData = new FormData();
+    
+    const formData = new FormData(); // Create a FormData object to send the audio file
     formData.append('audio', audioBlob, 'complaint.wav');
-
-    // Send the POST request to the correct backend endpoint
-    const response = await fetch('http://localhost:5000/api/send-call', {
+    
+    const response = await fetch('http://localhost:5000/api/send-call', { // Send the POST request to the backend endpoint
       method: 'POST',
       body: formData,
     });
@@ -36,10 +13,9 @@ export const sendCallToBackend = async (audioBlob) => {
       throw new Error('Failed to send the call to the backend');
     }
 
-    const result = await response.json();
-    console.log('Backend response:', result);
+    const result = await response.json(); // Get the response from the OpenAI API
     return result;
-  } catch (error) {
+  } catch (error) { // Catch any potential errors
     console.error('Error sending call:', error);
     throw error;
   }

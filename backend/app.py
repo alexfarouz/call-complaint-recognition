@@ -3,8 +3,8 @@ from flask_cors import CORS
 import logging
 import os
 from speech_to_text import convert_audio_to_text  # Import the speech-to-text function
+from rag import classify_and_summarize_call
 
-# Set up basic configuration for logging
 logging.basicConfig(level=logging.DEBUG)
 app = Flask(__name__)
 
@@ -16,17 +16,16 @@ def process_call_endpoint():
     if 'audio' not in request.files:
         return jsonify({'error': 'No audio file provided'}), 400
 
-    audio_file = request.files['audio']
-    print(audio_file)
-    audio_bytes = audio_file.read()
+    audio_file = request.files['audio'] # Get audio file
+    audio_bytes = audio_file.read()  # Convert file into bytes
 
     try:
-        # Convert audio file to text using the speech-to-text API
-        transcript = convert_audio_to_text(audio_bytes)
+        transcript = convert_audio_to_text(audio_bytes) # Convert bytes into transcript via Google Cloud Speech to Text
         print(f"Transcript: {transcript}")
 
-        # For now, return only the transcript to the frontend
-        return jsonify({'transcript': transcript}), 200
+        response = classify_and_summarize_call(transcript) # Pass the transcript to the OpenAI API for classification
+        print(response)
+        return jsonify(response), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

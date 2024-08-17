@@ -3,43 +3,42 @@ import os
 from dotenv import load_dotenv
 
 
-load_dotenv(dotenv_path='../.env.local') # Load env variables
+load_dotenv(dotenv_path='.env.local') # Load env variables
 
-# Configure OpenAI API Key
 openai_api_key = os.getenv("OPENAI_API_KEY")
 os.environ['OPENAI_API_KEY'] = openai_api_key
 
 openai_client = OpenAI()
 
-def classify_and_summarize_call(call_content):
+def classify_and_summarize_call(transcript):
     try:
         # Craft the prompt for classification and summarization
-        prompt = (
-            """Determine if the following text is a complaint. Summarize the complaint:
+        systemPrompt = """
+            You are a call complaint classifier. The provided text is the content of the call. Based on the call you must determine whether
+            the call is a complaint or not. After determining if it is a complaint or not, summarize the call based on the content given.
             
             Return in the following JSON format
                     {
-                        "response":[{
-                            "complaint": true or false (pick one),
+                        "response":{
+                            "complaint": true or false (based on call),
                             "summary":"string"
-                        }]
+                        }
                     }
             """
-        )
+        
 
         # Call the OpenAI API
         response = openai_client.chat.completions.create(
             model="gpt-4o-mini",
             messages = [
-                {"role": "system", "content": prompt},
-                {"role": "user", "content": {call_content}}
+                {"role": "system", "content": systemPrompt}, # System prompt
+                {"role": "user", "content": transcript} # Call content
             ],
             max_tokens=1000
         )
 
         # Extract the response text
         classification_summary = response.choices[0].message.content
-        print(f"AI Response: {classification_summary}")  # Print the response in the console
         return classification_summary
 
     except Exception as e:

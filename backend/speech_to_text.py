@@ -11,33 +11,31 @@ load_dotenv(dotenv_path='../.env.local')
 # Retrieve and parse the credentials JSON from the environment variable
 credentials_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
 
-# Parse the JSON string
-credentials_info = json.loads(credentials_json)
+credentials_info = json.loads(credentials_json) # Parse the JSON string
 
-# Use the parsed credentials
+
 credentials = service_account.Credentials.from_service_account_info(credentials_info)
-speech_client = speech.SpeechClient(credentials=credentials)
+speech_client = speech.SpeechClient(credentials=credentials) # Use the parsed credentials
 
 
 def convert_audio_to_text(audio_bytes):
     try:
-
-        # Prepare the audio data for Google API
-        audio = speech.RecognitionAudio(content=audio_bytes)
+        
+        audio = speech.RecognitionAudio(content=audio_bytes) # Prepare the audio data for Google API
         config = speech.RecognitionConfig(
             encoding=speech.RecognitionConfig.AudioEncoding.WEBM_OPUS,
-            language_code="en-US",
-            sample_rate_hertz=48000,  # Ensure the sample rate matches the conversion
+            language_code="en-US", # Potentially add other languages
+            sample_rate_hertz=48000,
         )
 
-        # Send the audio data to the Google API
-        response = speech_client.recognize(config=config, audio=audio)
+        response = speech_client.recognize(config=config, audio=audio) # Send the audio data to the Google API
 
         # Log detailed response for further analysis
-        print(f"Raw response: {response}")
+        '''print(f"Raw response: {response}")
         for result in response.results:
             print(f"Transcript: {result.alternatives[0].transcript}")
-
+        '''
+        
         if response.results:
             transcript = response.results[0].alternatives[0].transcript
             print(f"Transcript: {transcript}")
@@ -48,5 +46,4 @@ def convert_audio_to_text(audio_bytes):
 
     except Exception as e:
         print(f"Error during speech recognition: {str(e)}")
-        #print(f"File Path: {audio_file_path}")  # Print the file path if an error occurs
         return None
