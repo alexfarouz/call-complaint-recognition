@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MicIcon from '@mui/icons-material/Mic';
+import MicNoneIcon from '@mui/icons-material/MicNone';
 import { sendCallToBackend } from '../utils/SendCall';
+import { IoIosArrowRoundBack } from 'react-icons/io';
+import './RecordCall.css'; // Import the CSS file for styling
 
 const RecordCall = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -28,6 +33,14 @@ const RecordCall = () => {
     if (event.data && event.data.size > 0) {
       setAudioBlob(event.data);
       setAudioUrl(URL.createObjectURL(event.data));
+    }
+  };
+
+  const toggleRecording = () => {
+    if (isRecording) {
+      stopRecording();
+    } else {
+      startRecording();
     }
   };
 
@@ -70,16 +83,28 @@ const RecordCall = () => {
   };
 
   return (
-    <div>
-      <h1>Record Your Complaint</h1>
-      {audioUrl && <audio src={audioUrl} controls />}
-      <div style={{ marginTop: '20px' }}>
+    <div className="recording-container">
+      <a href="/" className="back-button">
+        <IoIosArrowRoundBack size={30} />
+      </a>
+      <h1 className="record-title">Record Your Complaint</h1>
+      <div className="microphone-container">
+        <IconButton 
+          className={`microphone-icon ${isRecording ? 'recording' : ''}`} 
+          onClick={toggleRecording}
+          aria-label={isRecording ? "Stop Recording" : "Start Recording"}
+        >
+          {isRecording ? <MicIcon fontSize="inherit" /> : <MicNoneIcon fontSize="inherit" />}
+        </IconButton>
+        <div className={`wave-animation ${isRecording ? 'wave-active' : ''}`}></div>
+      </div>
+      
+      <div className="button-group">
         <Button 
           variant="contained" 
           color="primary" 
           onClick={startRecording} 
           disabled={isRecording}
-          style={{ marginRight: '10px' }}
         >
           Start Recording
         </Button>
@@ -88,7 +113,6 @@ const RecordCall = () => {
           color="secondary" 
           onClick={stopRecording} 
           disabled={!isRecording}
-          style={{ marginRight: '10px' }}
         >
           Stop Recording
         </Button>
@@ -97,7 +121,6 @@ const RecordCall = () => {
           color="success" 
           onClick={handleSendToBackend} 
           disabled={!audioBlob}
-          style={{ marginRight: '10px' }}
         >
           Send to Backend
         </Button>
@@ -110,10 +133,9 @@ const RecordCall = () => {
           Delete Recording
         </Button>
       </div>
-      
-      {/* Display the response text */}
+      {audioUrl && <audio src={audioUrl} controls />}
       {responseText && (
-        <div style={{ marginTop: '20px' }}>
+        <div className="response-text">
           <h2>API Response:</h2>
           <p>{responseText}</p>
         </div>
