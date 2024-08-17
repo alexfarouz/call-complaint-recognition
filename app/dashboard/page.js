@@ -1,5 +1,5 @@
 'use client'
-import RecordCall from './components/RecordCall';
+import RecordCall from '../components/RecordCall';
 
 export default function Home() {
   return (
