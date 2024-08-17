@@ -1,53 +1,52 @@
 import { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import { SplitCalls } from '../utils/SplitCalls';
+import { fetchCallById, fetchCallIds } from '../utils/fetchCall';
 import { sendCallToBackend } from '../utils/SendCall';
 
 const CallButtons = () => {
-  const [calls, setCalls] = useState([]);
+  const [callIds, setCallIds] = useState([]);
 
   useEffect(() => {
-    const loadCalls = async () => {
+    const loadCallIds = async () => {
       try {
-        const fetchedCalls = await SplitCalls();  // Fetch the calls data
-        setCalls(fetchedCalls);
+        const ids = await fetchCallIds();  // Fetch only the document IDs from Firestore
+        setCallIds(ids);
       } catch (error) {
-        console.error('Error fetching calls:', error);
+        console.error('Error fetching call IDs:', error);
       }
     };
 
-    loadCalls();
+    loadCallIds();
   }, []);
 
-  const handleCallClick = async (callIndex) => {
-    const selectedCall = calls.find(call => call.index === callIndex);
-  
-    console.log('Selected Call:', selectedCall); // Debugging log
-  
-    if (!selectedCall || !selectedCall.content) {
-      console.error('Invalid call data:', selectedCall);
-      return;
-    }
-  
+  const handleCallClick = async (callId) => {
     try {
-      const result = await sendCallToBackend(selectedCall.content);
+      const selectedCall = await fetchCallById(callId);  // Fetch the specific call by ID when button is clicked
+      console.log('Selected Call:', selectedCall); // Debugging log
+
+      if (!selectedCall || !selectedCall.complaint_what_happened) {
+        console.error('Invalid call data:', selectedCall);
+        return;
+      }
+
+      const result = await sendCallToBackend(selectedCall.complaint_what_happened);
       console.log('Call sent successfully:', result);
     } catch (error) {
-      console.error('Error sending call:', error);
+      console.error('Error fetching or sending call:', error);
     }
   };
 
   return (
     <Grid container spacing={2}>
-      {calls.map((call) => (
-        <Grid item xs={2} sm={1} key={call.id}>
+      {callIds.map((callId, index) => (
+        <Grid item xs={2} sm={1} key={callId}>
           <Button
             variant="outlined"
-            onClick={() => handleCallClick(call.index)}
+            onClick={() => handleCallClick(callId)}
             fullWidth
           >
-            Call {call.index}
+            Call {index + 1}
           </Button>
         </Grid>
       ))}
