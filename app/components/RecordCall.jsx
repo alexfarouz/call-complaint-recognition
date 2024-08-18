@@ -96,7 +96,7 @@ const RecordCall = () => {
             variant="contained" 
             onClick={startRecording} 
             disabled={isRecording}
-            className="px-4 py-2 sm:px-4 sm:py-2 bg-[#007BFF] text-white rounded-lg text-sm sm:text-xl font-medium 
+            className="px-4 py-2 sm:px-4 sm:py-2 bg-[#007BFF] text-white rounded-lg text-sm sm:text-md font-medium 
               transition-colors hover:bg-white hover:text-blue-600 focus:outline-none
               focus:ring-offset-2 focus:ring-blue-600 normal-case sm:min-w-48"
           >
@@ -106,7 +106,7 @@ const RecordCall = () => {
             variant="contained" 
             onClick={stopRecording} 
             disabled={!isRecording}
-            className="px-4 py-2 sm:px-4 sm:py-2 bg-red-600 text-white rounded-lg text-sm sm:text-lg font-medium 
+            className="px-4 py-2 sm:px-4 sm:py-2 bg-red-600 text-white rounded-lg text-sm sm:text-md font-medium 
               transition-colors hover:bg-white hover:text-red-600 focus:outline-none 
               focus:ring-offset-2 focus:ring-red-600 normal-case sm:min-w-48"
           >
@@ -116,7 +116,7 @@ const RecordCall = () => {
             variant="contained" 
             onClick={handleSendToBackend} 
             disabled={!audioBlob}
-            className="px-4 py-2 sm:px-4 sm:py-2 bg-green-600 text-white rounded-lg text-sm sm:text-lg font-medium 
+            className="px-4 py-2 sm:px-4 sm:py-2 bg-green-600 text-white rounded-lg text-sm sm:text-md font-medium 
               transition-colors hover:bg-white hover:text-green-600 focus:outline-none 
               focus:ring-offset-2 focus:ring-green-600 normal-case sm:min-w-48"
           >
@@ -126,7 +126,7 @@ const RecordCall = () => {
             variant="contained" 
             onClick={handleDeleteRecording} 
             disabled={!audioBlob}
-            className="px-4 py-2 sm:px-4 sm:py-2 bg-red-600 text-white rounded-lg text-sm sm:text-lg font-medium 
+            className="px-4 py-2 sm:px-4 sm:py-2 bg-red-600 text-white rounded-lg text-sm sm:text-md font-medium 
               transition-colors hover:bg-white hover:text-red-600 focus:outline-none
               focus:ring-offset-2 focus:ring-red-600 normal-case sm:min-w-48"
           >

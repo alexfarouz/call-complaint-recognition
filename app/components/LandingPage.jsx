@@ -1,77 +1,102 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Button, Container, Grid, Paper, IconButton, Link } from '@mui/material';
+import { Typography, Button, Container, Grid, Paper, IconButton, Link } from '@mui/material';
 import { Security, Speed, IntegrationInstructions, Email } from '@mui/icons-material';
 import './LandingPage.css';
+import Navbar from './Navbar'
+import {motion} from 'framer-motion'
+import Image from 'next/image';
+import { GiExpense } from "react-icons/gi";
+import { RiRobot3Fill } from "react-icons/ri";
 
 const LandingPage = () => {
   return (
     <div className="landing-page">
-      {/* Hero Section */}
-      <AppBar position="static" className="hero-section">
-        <Toolbar>
-          <Typography variant="h5" className="logo" component="div" sx={{ flexGrow: 1 }}>
-            SpeechSense
+      <Navbar />
+
+      <Container maxWidth="md" className="py-96">
+        <motion.div
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1 }} className='cycle-colors'
+        >
+          <h2 className="text-white text-center text-4xl font-normal">
+            Welcome to <span className="font-bold">Saphire</span>
+          </h2>
+        </motion.div>
+      </Container>
+
+      {/* About */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <Container maxWidth="md" className="bg-blue-950 p-16 rounded-3xl">
+          <Typography variant="h4" component="h3" className="text-center pb-10">
+            About Saphire
           </Typography>
-        </Toolbar>
-      </AppBar>
-
-      <Container maxWidth="md" className="hero-content">
-        <Typography variant="h3" component="h2" gutterBottom>
-          Transform Your Voice into Insightful Feedback
-        </Typography>
-        <Button variant="contained" color="primary" size="large" href='/recognition'>
-          Get Started
-        </Button>
-      </Container>
-
-      {/* About Section */}
-      <Container id="about" maxWidth="md" className="about-section">
-        <Typography variant="h4" component="h3" gutterBottom>
-          About SpeechSense
-        </Typography>
-        <Typography variant="body1" component="p">
-          SpeechSense is an advanced AI tool designed to analyze and summarize speech input, 
-          detecting whether it contains complaints and providing a concise summary of the content. 
-          Our technology makes it easier for businesses to understand customer feedback and gain 
-          valuable insights with just a click.
-        </Typography>
-      </Container>
+          <Typography variant="body1" component="p">
+            Welcome to Saphire, your trusted partner in navigating the complexities of personal finance and customer satisfaction. 
+            At Saphire, we are committed to harnessing the power of cutting-edge technology to provide you with innovative solutions 
+            that simplify your financial life and enhance your business operations. Our platform offers two groundbreaking features: 
+            AI-Powered Complaint Recognition and an Expense Tracker, both designed to bring efficiency, 
+            transparency, and ease into your daily financial management.
+          </Typography>
+        </Container>
+      </motion.div>
 
       {/* Features Section */}
-      <Container id="features" maxWidth="md" className="features-section">
-        <Typography variant="h4" component="h3" gutterBottom>
-          Features
-        </Typography>
-        <Grid container spacing={4}>
-          <Grid item xs={12} sm={4}>
-            <Paper elevation={3} className="feature">
-              <IconButton aria-label="real-time-analysis">
-                <Speed fontSize="large" color="primary" />
-              </IconButton>
-              <Typography variant="h6" gutterBottom>Real-Time Analysis</Typography>
-              <Typography variant="body2">Instant feedback and summary on whether the input is a complaint or not.</Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Paper elevation={3} className="feature">
-              <IconButton aria-label="easy-integration">
-                <IntegrationInstructions fontSize="large" color="primary" />
-              </IconButton>
-              <Typography variant="h6" gutterBottom>Easy Integration</Typography>
-              <Typography variant="body2">Seamlessly integrate our tool into your existing system.</Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Paper elevation={3} className="feature">
-              <IconButton aria-label="secure-private">
-                <Security fontSize="large" color="primary" />
-              </IconButton>
-              <Typography variant="h6" gutterBottom>Secure & Private</Typography>
-              <Typography variant="body2">Your data is encrypted and processed securely.</Typography>
-            </Paper>
-          </Grid>
-        </Grid>
-      </Container>
+      <div className="container mx-auto flex justify-center mt-80">
+        {/* Expense Tracker */}
+        <motion.div
+          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: -50 }}
+          transition={{ duration: 1 }}
+          className="bg-blue-950 p-8 rounded-3xl w-[35%] mx-10"
+        >
+          <Typography variant="h5" component="h4" className="text-white text-center pb-4">
+            <div className="flex items-center justify-center">
+              <GiExpense className="mr-2" />
+              <span>Expense Tracker</span>
+            </div>
+          </Typography>
+          <Typography variant="body1" component="p" className="text-white">
+            Manage your finances with ease using our comprehensive Expense Tracker. Record, categorize, and analyze 
+            all your expenses in one place, and stay on top of your financial health effortlessly.
+          </Typography>
+          <Image src="/assets/ExpenseTracker.png" alt="Logo" width={350} height={350} className="py-8 mx-auto"/>
+          <div className="flex justify-center">
+            <Button variant="contained" color="primary" href="/profile" className="normal-case">
+              Expenses
+            </Button>
+          </div>
+        </motion.div>
+
+        {/* Complaint Recognition */}
+        <motion.div
+          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: 50 }}
+          transition={{ duration: 1 }}
+          className="bg-blue-950 p-8 rounded-3xl w-[35%] mx-10"
+        >
+          <Typography variant="h5" component="h4" className="text-white text-center pb-4">
+            <div className="flex items-center justify-center">
+              <RiRobot3Fill className="mr-2"/>
+              Complaint Recognition
+            </div>
+          </Typography>
+          <Typography variant="body1" component="p" className="text-white">
+            Enhance customer satisfaction with our AI-powered Complaint Recognition system. Automatically detect, 
+            categorize, and respond to customer complaints, ensuring a seamless resolution process.
+          </Typography>
+          <Image src="/assets/ComplaintRecognition.png" alt="Logo" width={350} height={350} className="py-8 mx-auto"/>
+          <div className="flex justify-center">
+            <Button variant="contained" color="primary" href="/recognition" className="normal-case">
+              Complaint Recognition
+            </Button>
+          </div>
+        </motion.div>
+      </div>
 
       {/* Contact Section */}
       <Container id="contact" maxWidth="md" className="contact-section">
@@ -87,7 +112,7 @@ const LandingPage = () => {
       {/* Footer */}
       <footer className="footer">
         <Typography variant="body2" color="textSecondary" align="center">
-          &copy; 2024 SpeechSense. All rights reserved.
+          &copy; 2024 Saphire. All rights reserved.
         </Typography>
       </footer>
     </div>
