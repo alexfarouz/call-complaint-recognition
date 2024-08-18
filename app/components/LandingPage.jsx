@@ -1,11 +1,9 @@
 import React from 'react';
 import { Typography, Button, Container, Grid, Paper, IconButton, Link } from '@mui/material';
-import { Security, Speed, IntegrationInstructions, Email } from '@mui/icons-material';
 import './LandingPage.css';
 import Navbar from './Navbar'
 import {motion} from 'framer-motion'
 import Image from 'next/image';
-import { GiExpense } from "react-icons/gi";
 import { RiRobot3Fill } from "react-icons/ri";
 import { SignedOut, SignIn } from '@clerk/clerk-react';
 

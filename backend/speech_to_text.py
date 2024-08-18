@@ -1,20 +1,17 @@
 import os
 import json
-import subprocess
 from google.cloud import speech
 from google.oauth2 import service_account
-
-# Load environment variables from .env.local
 from dotenv import load_dotenv
+
 load_dotenv(dotenv_path='../.env.local')
 
-# Retrieve and parse the credentials JSON from the environment variable
-credentials_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
+# Use the file path to the service account key JSON file
+credentials_file_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 
-credentials_info = json.loads(credentials_json) # Parse the JSON string
+# Load the credentials from the file
+credentials = service_account.Credentials.from_service_account_file(credentials_file_path)
 
-
-credentials = service_account.Credentials.from_service_account_info(credentials_info)
 speech_client = speech.SpeechClient(credentials=credentials) # Use the parsed credentials
 
 
