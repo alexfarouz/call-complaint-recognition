@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import Button from '@mui/material/Button';
+import { useAuth } from '@clerk/nextjs';
 
 const TextInput = () => {
   const [text, setText] = useState('');
   const [response, setResponse] = useState(null); // State to hold the entire response
+  const { getToken } = useAuth(); // Get the JWT token using Clerk's useAuth hook
 
   const handleChange = (event) => {
     setText(event.target.value);
@@ -11,12 +12,13 @@ const TextInput = () => {
 
   const handleSubmit = async () => {
     if (!text) return;
-
+    const token = await getToken();
     try {
       const response = await fetch('http://localhost:5000/api/send-text', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({ complaint: text }),
       });
@@ -35,7 +37,7 @@ const TextInput = () => {
   };
 
   return (
-    <div>
+    <div className="pt-10">
       <h1 className="text-3xl mb-5">Type Your Complaint</h1>
       <textarea
         value={text}
@@ -45,13 +47,13 @@ const TextInput = () => {
         className="w-96 sm:w-full h-64 p-4 bg-[#d7deed] border border-transparent rounded-lg 
           focus:outline-none focus:bg-[#c5d1e8] text-[#424242] text-base resize-none leading-relaxed font-inter"
       />
-      <Button
+      <button
         className="mt-4 px-6 py-3 bg-[#007BFF] text-white rounded-lg text-lg transition-colors hover:bg-white 
         hover:text-black focus:outline-none focus:ring-offset-2 focus:ring-[#007BFF] normal-case"
         onClick={handleSubmit}
       >
         Submit Complaint
-      </Button>
+      </button>
 
       {response && (
         <div className="w-full flex justify-center">

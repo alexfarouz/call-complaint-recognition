@@ -1,4 +1,4 @@
-export const sendCallToBackend = async (audioBlob) => {
+export const sendCallToBackend = async (audioBlob, token) => {
   try {
     
     const formData = new FormData(); // Create a FormData object to send the audio file
@@ -6,6 +6,9 @@ export const sendCallToBackend = async (audioBlob) => {
     
     const response = await fetch('http://localhost:5000/api/send-call', { // Send the POST request to the backend endpoint
       method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`, // Include the JWT token in the Authorization header
+      },
       body: formData,
     });
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { SignedIn, UserButton } from '@clerk/nextjs';
 
 const Navbar = () => {
   const [pathname, setPathname] = useState('');
@@ -24,11 +25,7 @@ const Navbar = () => {
                     Recognition
                 </a>
             )}
-            {pathname !== '/profile' && (
-                <a href="/profile" className="bg-transparent text-white px-4 py-2 rounded lg:border border-white hover:text-[#96addf] lg:hover:border-[#96addf]">
-                    Expenses
-                </a>
-            )}
+            <SignedIn><UserButton></UserButton></SignedIn>
         </div>
 
       </div>

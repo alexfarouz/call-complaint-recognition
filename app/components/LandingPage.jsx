@@ -7,6 +7,7 @@ import {motion} from 'framer-motion'
 import Image from 'next/image';
 import { GiExpense } from "react-icons/gi";
 import { RiRobot3Fill } from "react-icons/ri";
+import { SignedOut, SignIn } from '@clerk/clerk-react';
 
 const LandingPage = () => {
   return (
@@ -49,30 +50,7 @@ const LandingPage = () => {
       {/* Features Section */}
       <div className="container mx-auto flex flex-col lg:flex-row justify-center mt-20 space-y-8 lg:space-y-0 ">
         {/* Expense Tracker */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          className="bg-blue-950 lg:max-w-xl max-w-80 p-8 lg:p-16 mx-auto rounded-3xl"
-        >
-          <Typography variant="h5" component="h4" className="text-white text-center pb-4">
-            <div className="flex items-center justify-center">
-              <GiExpense className="mr-2" />
-              <span>Expense Tracker</span>
-            </div>
-          </Typography>
-          <Typography variant="body1" component="p" className="text-white">
-            Manage your finances with ease using our comprehensive Expense Tracker. Record, categorize, and analyze 
-            all your expenses in one place, and stay on top of your financial health effortlessly.
-          </Typography>
-          <Image src="/assets/ExpenseTracker.png" alt="Logo" width={350} height={350} className="py-8 mx-auto"/>
-          <div className="flex justify-center">
-            <button href="/recognition" className="bg-white text-black px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 hover:border-gray-400 flex items-center space-x-2">
-              <span>Expense Tracker</span>
-              <span className="text-black">→</span>
-            </button>
-          </div>
-        </motion.div>
+        
 
         {/* Complaint Recognition */}
         <motion.div
@@ -101,7 +79,12 @@ const LandingPage = () => {
           </div>
         </motion.div>
       </div>
-
+      
+      <div className="justify-center flex pt-52">
+        <SignedOut>
+          <SignIn></SignIn>
+        </SignedOut>
+      </div>
 
       {/* Contact Section */}
       <Container id="contact" maxWidth="md" className="contact-section">
