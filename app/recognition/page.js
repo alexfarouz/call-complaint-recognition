@@ -1,10 +1,10 @@
 'use client'
-import RecordCall from '../components/RecordCall';
+import TabMenu from '../components/TabMenu';
 
 export default function Home() {
   return (
     <div>
-      <RecordCall />  
+      <TabMenu />
     </div>
   );
 }

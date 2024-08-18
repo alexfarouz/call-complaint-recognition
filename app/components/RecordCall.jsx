@@ -4,15 +4,14 @@ import IconButton from '@mui/material/IconButton';
 import MicIcon from '@mui/icons-material/Mic';
 import MicNoneIcon from '@mui/icons-material/MicNone';
 import { sendCallToBackend } from '../utils/SendCall';
-import { IoIosArrowRoundBack } from 'react-icons/io';
-import './RecordCall.css'; // Import the CSS file for styling
+import './ComplaintClassifier.css';
 
 const RecordCall = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioBlob, setAudioBlob] = useState(null);
   const [audioUrl, setAudioUrl] = useState(null);
-  const [responseText, setResponseText] = useState(''); // New state variable to hold the API response
+  const [response, setResponse] = useState(null); // State to hold the entire response
 
   useEffect(() => {
     if (!navigator.mediaDevices || !window.MediaRecorder) {
@@ -64,31 +63,23 @@ const RecordCall = () => {
     try {
       const result = await sendCallToBackend(audioBlob);
       const parsedResult = JSON.parse(result); // Parse the response
-      
-      // Get the summary from the response
-      const summary = parsedResult.response && parsedResult.response.summary 
-        ? parsedResult.response.summary 
-        : 'No summary received';
-      setResponseText(summary);
+      setResponse(parsedResult.response); // Set the entire response
     } catch (error) {
       console.error('Error sending call:', error);
-      setResponseText('An error occurred while processing your request.');
+      setResponse({ error: 'An error occurred while processing your request.' });
     }
   };
 
   const handleDeleteRecording = () => {
     setAudioBlob(null);
     setAudioUrl(null);
-    setResponseText(''); // Clear the response text when deleting the recording
+    setResponse(null); // Clear the response when deleting the recording
   };
 
   return (
-    <div className="recording-container">
-      <a href="/" className="back-button">
-        <IoIosArrowRoundBack size={30} />
-      </a>
-      <h1 className="record-title">Record Your Complaint</h1>
-      <div className="microphone-container">
+    <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 className="record-title text-3xl font-inter text-center">Record Your Complaint</h1>
+      <div className="microphone-container flex justify-center">
         <IconButton 
           className={`microphone-icon ${isRecording ? 'recording' : ''}`} 
           onClick={toggleRecording}
@@ -99,47 +90,68 @@ const RecordCall = () => {
         <div className={`wave-animation ${isRecording ? 'wave-active' : ''}`}></div>
       </div>
       
-      <div className="button-group">
-        <Button 
-          variant="contained" 
-          color="primary" 
-          onClick={startRecording} 
-          disabled={isRecording}
-        >
-          Start Recording
-        </Button>
-        <Button 
-          variant="contained" 
-          color="secondary" 
-          onClick={stopRecording} 
-          disabled={!isRecording}
-        >
-          Stop Recording
-        </Button>
-        <Button 
-          variant="contained" 
-          color="success" 
-          onClick={handleSendToBackend} 
-          disabled={!audioBlob}
-        >
-          Send to Backend
-        </Button>
-        <Button 
-          variant="contained" 
-          color="error" 
-          onClick={handleDeleteRecording} 
-          disabled={!audioBlob}
-        >
-          Delete Recording
-        </Button>
-      </div>
-      {audioUrl && <audio src={audioUrl} controls />}
-      {responseText && (
-        <div className="response-text">
-          <h2>API Response:</h2>
-          <p>{responseText}</p>
+      <div className="pt-8">
+        <div className="flex justify-center space-x-2 sm:space-x-4">
+          <Button 
+            variant="contained" 
+            onClick={startRecording} 
+            disabled={isRecording}
+            className="px-4 py-2 sm:px-4 sm:py-2 bg-[#007BFF] text-white rounded-lg text-sm sm:text-xl font-medium 
+              transition-colors hover:bg-white hover:text-blue-600 focus:outline-none
+              focus:ring-offset-2 focus:ring-blue-600 normal-case sm:min-w-48"
+          >
+            Start Recording
+          </Button>
+          <Button 
+            variant="contained" 
+            onClick={stopRecording} 
+            disabled={!isRecording}
+            className="px-4 py-2 sm:px-4 sm:py-2 bg-red-600 text-white rounded-lg text-sm sm:text-lg font-medium 
+              transition-colors hover:bg-white hover:text-red-600 focus:outline-none 
+              focus:ring-offset-2 focus:ring-red-600 normal-case sm:min-w-48"
+          >
+            Stop Recording
+          </Button>
+          <Button 
+            variant="contained" 
+            onClick={handleSendToBackend} 
+            disabled={!audioBlob}
+            className="px-4 py-2 sm:px-4 sm:py-2 bg-green-600 text-white rounded-lg text-sm sm:text-lg font-medium 
+              transition-colors hover:bg-white hover:text-green-600 focus:outline-none 
+              focus:ring-offset-2 focus:ring-green-600 normal-case sm:min-w-48"
+          >
+            Submit Complaint
+          </Button>
+          <Button 
+            variant="contained" 
+            onClick={handleDeleteRecording} 
+            disabled={!audioBlob}
+            className="px-4 py-2 sm:px-4 sm:py-2 bg-red-600 text-white rounded-lg text-sm sm:text-lg font-medium 
+              transition-colors hover:bg-white hover:text-red-600 focus:outline-none
+              focus:ring-offset-2 focus:ring-red-600 normal-case sm:min-w-48"
+          >
+            Delete Recording
+          </Button>
         </div>
-      )}
+
+        {audioUrl && (
+          <div className="flex justify-center my-4">
+            <audio src={audioUrl} controls />
+          </div>
+        )}
+
+        {response && (
+          <div className="mt-8 flex justify-center">
+            <div className="w-full sm:w-auto sm:min-w-[51rem] p-4 bg-white rounded-lg shadow-md text-black">
+              <h2 className="text-xl font-semibold">API Response:</h2>
+              <p><strong>Complaint:</strong> {response.complaint ? "Yes" : "No"}</p>
+              <p><strong>Summary:</strong> {response.summary}</p>
+              <p><strong>Issue:</strong> {response.issue}</p>
+              <p><strong>Sub-Issue:</strong> {response['sub-issue']}</p>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,5 +1,3 @@
-/* RecordCall.css */
-
 /* Centering the main container */
 .back-button {
     position: absolute;
@@ -8,7 +6,6 @@
     text-decoration: none;
   }
 
-  
 .recording-container {
     display: flex;
     flex-direction: column;

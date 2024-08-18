@@ -19,7 +19,7 @@ const LandingPage = () => {
         <Typography variant="h3" component="h2" gutterBottom>
           Transform Your Voice into Insightful Feedback
         </Typography>
-        <Button variant="contained" color="primary" size="large" href='/dashboard'>
+        <Button variant="contained" color="primary" size="large" href='/recognition'>
           Get Started
         </Button>
       </Container>

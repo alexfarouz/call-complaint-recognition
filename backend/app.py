@@ -29,6 +29,21 @@ def process_call_endpoint():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/api/send-text', methods=['POST'])
+def process_text_endpoint():
+    data = request.get_json()
+    complaint_text = data.get('complaint')
+
+    if not complaint_text:
+        return jsonify({'error': 'No text provided'}), 400
+
+    try:
+        response = classify_and_summarize_call(complaint_text)  # Directly pass the text to the OpenAI API for classification
+        print(response)
+        return jsonify(response), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)

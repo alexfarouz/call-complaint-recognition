@@ -24,6 +24,7 @@ def classify_and_summarize_call(transcript):
             Based on the call you must determine whether the call is a complaint or not. After determining if it is a complaint 
             or not, summarize the call based on the content given. Also make sure to define the issue and sub-issue respectively.
             Base your response heavily on the context given to you. Use the fields provided in the context to base your answers.
+            If there is no issue or sub-issue for the user put "N/A" only as a last resort. Generate a similar issue or sub-issue if needed.
 
             Return in the following JSON format
                 {
@@ -34,6 +35,7 @@ def classify_and_summarize_call(transcript):
                         "sub-issue":"string",
                     }
                 }
+            Ensure not to surrond this with: json``` {...} ```
         """
         
         
