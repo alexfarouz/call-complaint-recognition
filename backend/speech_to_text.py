@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv(dotenv_path='../.env.local')
 
 # Use the file path to the service account key JSON file
-credentials_file_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+credentials_file_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "../service_account.json")
 
 # Load the credentials from the file
 credentials = service_account.Credentials.from_service_account_file(credentials_file_path)
