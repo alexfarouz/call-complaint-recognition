@@ -1,0 +1,186 @@
+/* Main Container */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+.transaction {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 20px;
+    margin: 0 auto;
+    font-family: 'Arial, sans-serif';
+    background-image: linear-gradient(to top, #37ecba 0%, #72afd3 100%);
+  }
+  
+  /* Nav bar */ 
+  .navbar-custom {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px); /* Optional: Adds a blur effect to the background */
+  }
+  
+  .navbar-custom .navbar-brand {
+    color: #fff; /* Text color for the brand */
+    font-size: 1.5rem;
+    margin-left: 30px;
+  }
+  
+  .navbar-custom .navbar-toggler-icon {
+    background-image: url('data:image/svg+xml;base64,...'); /* Optional: Customize navbar toggle icon */
+  }
+
+  /* Balance Section */
+  .balance-container {
+    background-color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    max-width: 250px;
+    margin-top: 50px;
+    padding: 20px;
+    border-radius: 10px;
+    color: #ffffff;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.7);
+  }
+  
+  .balance-container h2 {
+    border-bottom: 2px solid #ffffff;
+    padding-bottom: 10px;
+  }
+  
+  .income {
+    color: #00ff00;
+  }
+  
+  .expenses {
+    color: #ff4500;
+  }
+  
+  /* Transactions Section */
+  .transactions-container {
+    margin-top: 20px;
+    color: #030302;
+    font-size: 20px;
+  }
+  
+  .transactions-container h3 {
+    border-bottom: 2px solid #6e4ada;
+    padding-bottom: 10px;
+  }
+
+  .transactions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .transactions-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .transaction-item {
+    margin-bottom: 10px;
+  }
+  
+  .transaction-income {
+    color: #00ff00;
+  }
+  
+  .transaction-expense {
+    color: #ff4500;
+  }
+  
+  /* Buttons */
+  .add-transaction-button,
+  .modal-add-button,
+  .modal-cancel-button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .add-transaction-button {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .add-transaction-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+  
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-container {
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    color: #ffffff;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.7);
+    min-width: 300px;
+  }
+  
+  .modal-container h4 {
+    border-bottom: 2px solid #6e4ada;
+    padding-bottom: 10px;
+  }
+  
+  /* Input Fields */
+  .modal-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #333;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  /* Radio Buttons */
+  .modal-radio-label {
+    margin-right: 20px;
+  }
+  
+  .modal-radio-input {
+    margin-right: 10px;
+  }
+  
+  /* Modal Buttons */
+  .modal-add-button {
+    background-color: #6e4ada;
+    color: #e8deef;
+  }
+  
+  .modal-cancel-button {
+    background-color: #8f0f0f;
+    color: #decaca;
+    margin-left: 10px;
+  }
+  
