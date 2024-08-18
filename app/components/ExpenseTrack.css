@@ -1,0 +1,75 @@
+/* ExpenseTrack.css */
+
+.expense-track {
+    font-family: 'Arial', sans-serif;
+    background-image: linear-gradient(to top, #37ecba 0%, #72afd3 100%);
+  }
+
+  .navbar-custom {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px); /* Optional: Adds a blur effect to the background */
+  }
+  
+  .navbar-custom .navbar-brand {
+    color: #fff; /* Text color for the brand */
+    font-size: 1.5rem;
+  }
+  
+  .navbar-custom .navbar-toggler-icon {
+    background-image: url('data:image/svg+xml;base64,...'); /* Optional: Customize navbar toggle icon */
+  }
+  
+  .hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 0 20px;
+    background-size: cover;
+    color: #fff;
+  }
+  
+  .hero-section h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  
+  .hero-section p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+  }
+  
+  .hero-section .btn {
+    font-size: 1.25rem;
+    padding: 10px 20px;
+  }
+  
+
+  
+  .feature-card {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .footer-section {
+    color: #fff;
+  }
+  
+  .footer-section p {
+    margin: 0;
+    font-size: 1rem;
+  }
+  
