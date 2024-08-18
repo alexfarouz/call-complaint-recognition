@@ -9,3 +9,4 @@ openai
 langchain
 pinecone-client
 gunicorn
+json

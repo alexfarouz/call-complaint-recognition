@@ -16,7 +16,7 @@ load_dotenv(dotenv_path='.env.local')
 app = Flask(__name__)
 
 # Allow CORS requests from your frontend domain
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/*": {"origins": "https://saphire-delta.vercel.app/"}})
 
 CLERK_API_KEY = os.getenv('CLERK_SECRET_KEY')
 

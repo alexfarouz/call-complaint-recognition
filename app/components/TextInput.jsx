@@ -14,7 +14,7 @@ const TextInput = () => {
     if (!text) return;
     const token = await getToken();
     try {
-      const response = await fetch('http://localhost:5000/api/send-text', {
+      const response = await fetch('https://saphire-ts4s.onrender.com/api/send-text', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

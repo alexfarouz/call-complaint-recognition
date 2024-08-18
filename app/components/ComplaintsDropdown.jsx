@@ -10,7 +10,7 @@ const ComplaintsDropdown = () => {
     const fetchComplaints = async () => {
       try {
         const token = await getToken();
-        const response = await fetch('http://localhost:5000/api/get-complaints', {
+        const response = await fetch('https://saphire-ts4s.onrender.com/api/get-complaints', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
