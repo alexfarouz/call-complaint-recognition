@@ -30,8 +30,9 @@ const LandingPage = () => {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1 }}
+        className="bg-blue-950 lg:max-w-5xl max-w-80 p-8 lg:p-16 mx-auto rounded-3xl"
       >
-        <Container maxWidth="md" className="bg-blue-950 p-16 rounded-3xl">
+        <Container>
           <Typography variant="h4" component="h3" className="text-center pb-10">
             About Saphire
           </Typography>
@@ -46,13 +47,13 @@ const LandingPage = () => {
       </motion.div>
 
       {/* Features Section */}
-      <div className="container mx-auto flex justify-center mt-80">
+      <div className="container mx-auto flex flex-col lg:flex-row justify-center mt-20 space-y-8 lg:space-y-0 ">
         {/* Expense Tracker */}
         <motion.div
-          whileInView={{ opacity: 1, x: 0 }}
-          initial={{ opacity: 0, x: -50 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
-          className="bg-blue-950 p-8 rounded-3xl w-[35%] mx-10"
+          className="bg-blue-950 lg:max-w-xl max-w-80 p-8 lg:p-16 mx-auto rounded-3xl"
         >
           <Typography variant="h5" component="h4" className="text-white text-center pb-4">
             <div className="flex items-center justify-center">
@@ -66,23 +67,24 @@ const LandingPage = () => {
           </Typography>
           <Image src="/assets/ExpenseTracker.png" alt="Logo" width={350} height={350} className="py-8 mx-auto"/>
           <div className="flex justify-center">
-            <Button variant="contained" color="primary" href="/profile" className="normal-case">
-              Expenses
-            </Button>
+            <button href="/recognition" className="bg-white text-black px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 hover:border-gray-400 flex items-center space-x-2">
+              <span>Expense Tracker</span>
+              <span className="text-black">→</span>
+            </button>
           </div>
         </motion.div>
 
         {/* Complaint Recognition */}
         <motion.div
-          whileInView={{ opacity: 1, x: 0 }}
-          initial={{ opacity: 0, x: 50 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
-          className="bg-blue-950 p-8 rounded-3xl w-[35%] mx-10"
+          className="bg-blue-950 lg:max-w-xl max-w-80 p-8 lg:p-16 mx-auto rounded-3xl"
         >
           <Typography variant="h5" component="h4" className="text-white text-center pb-4">
             <div className="flex items-center justify-center">
               <RiRobot3Fill className="mr-2"/>
-              Complaint Recognition
+              <span>Complaint Recognition</span>
             </div>
           </Typography>
           <Typography variant="body1" component="p" className="text-white">
@@ -91,12 +93,15 @@ const LandingPage = () => {
           </Typography>
           <Image src="/assets/ComplaintRecognition.png" alt="Logo" width={350} height={350} className="py-8 mx-auto"/>
           <div className="flex justify-center">
-            <Button variant="contained" color="primary" href="/recognition" className="normal-case">
-              Complaint Recognition
-            </Button>
+          <button href="/recognition" className="bg-white text-black px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 hover:border-gray-400 flex items-center space-x-2">
+            <span>Complaint Recognition</span>
+            <span className="text-black">→</span>
+          </button>
+
           </div>
         </motion.div>
       </div>
+
 
       {/* Contact Section */}
       <Container id="contact" maxWidth="md" className="contact-section">
