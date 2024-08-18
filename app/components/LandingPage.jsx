@@ -67,9 +67,10 @@ const LandingPage = () => {
           </Typography>
           <Image src="/assets/ExpenseTracker.png" alt="Logo" width={350} height={350} className="py-8 mx-auto"/>
           <div className="flex justify-center">
-            <Button variant="contained" color="primary" href="/profile" className="normal-case">
-              Expenses
-            </Button>
+            <button href="/recognition" className="bg-white text-black px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 hover:border-gray-400 flex items-center space-x-2">
+              <span>Expense Tracker</span>
+              <span className="text-black">→</span>
+            </button>
           </div>
         </motion.div>
 
@@ -92,9 +93,11 @@ const LandingPage = () => {
           </Typography>
           <Image src="/assets/ComplaintRecognition.png" alt="Logo" width={350} height={350} className="py-8 mx-auto"/>
           <div className="flex justify-center">
-            <Button variant="contained" color="primary" href="/recognition" className="normal-case">
-              Complaint Recognition
-            </Button>
+          <button href="/recognition" className="bg-white text-black px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 hover:border-gray-400 flex items-center space-x-2">
+            <span>Complaint Recognition</span>
+            <span className="text-black">→</span>
+          </button>
+
           </div>
         </motion.div>
       </div>
