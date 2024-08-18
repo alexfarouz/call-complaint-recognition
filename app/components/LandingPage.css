@@ -9,51 +9,6 @@ body, html {
   color: #ffffff;
 }
 
-/* Hero Section */
-.hero-section {
-  background: transparent;
-  box-shadow: none;
-  position: fixed;
-  width: 100%;
-  z-index: 100;
-}
-
-.logo {
-  font-weight: bold;
-  letter-spacing: 2px;
-  color: #ffffff;
-}
-
-.hero-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    text-align: center;
-    padding: 0 20px;
-}
-
-.hero-content h2 {
-  animation: fadeInDown 2s;
-}
-
-.hero-content p {
-  animation: fadeInUp 2s;
-}
-
-.hero-content .MuiButton-containedPrimary {
-  background-color: #ffffff;
-  color: #0b2564;
-  margin-top: 20px;
-  transition: all 0.3s ease;
-}
-
-.hero-content .MuiButton-containedPrimary:hover {
-  background-color: #a6c8fe;
-  color: #0b2564;
-}
-
 /* Section Styles */
 .about-section, .features-section, .contact-section {
     display: flex;
@@ -127,27 +82,7 @@ body, html {
 }
 
 /* Animations */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 /* Responsive Design */
 @media (max-width: 768px) {
