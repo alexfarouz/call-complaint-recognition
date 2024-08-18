@@ -83,18 +83,18 @@ db_config = {
 }
 
 # Function to store complaint data in MySQL
-def store_complaint_in_db(user_id, complaint_text, summary, issue, subissue):
+def store_complaint_in_db(user_id, title, complaint_text, summary, issue, subissue):
     try:
         # Connect to the database
         connection = mysql.connector.connect(**db_config)
         cursor = connection.cursor()
 
         # SQL query to insert data
-        add_complaint = ("INSERT INTO complaints (user_id, complaint_text, summary, issue, subissue) "
-                         "VALUES (%s, %s, %s, %s, %s)")
+        add_complaint = ("INSERT INTO complaints (user_id, title, complaint_text, summary, issue, subissue) "
+                         "VALUES (%s, %s, %s, %s, %s, %s)")
 
         # Pass the complaint_text as a single-item tuple
-        cursor.execute(add_complaint, (user_id, complaint_text, summary, issue, subissue))
+        cursor.execute(add_complaint, (user_id, title, complaint_text, summary, issue, subissue))
 
         # Commit the transaction
         connection.commit()
@@ -126,7 +126,6 @@ def authenticate_and_ensure_user(request):
 
     return user_id, None, None
 
-
 @app.route('/api/send-call', methods=['POST'])
 def process_call_endpoint():
     if 'audio' not in request.files:
@@ -149,13 +148,14 @@ def process_call_endpoint():
         response_dict = json.loads(response)
 
         # Extract the values from the response
+        title = response_dict["response"].get('title', 'Untitled Complaint')
         complaint_text = "Yes" if response_dict["response"].get('complaint', False) else "No"
         summary = response_dict["response"].get('summary', '')
         issue = response_dict["response"].get('issue', '')
         subissue = response_dict["response"].get('sub-issue', '')
 
         # Store the complaint in the MySQL database
-        store_complaint_in_db(user_id, complaint_text, summary, issue, subissue)  # Store the complaint in the MySQL database
+        store_complaint_in_db(user_id, title, complaint_text, summary, issue, subissue)  # Store the complaint in the MySQL database
         return jsonify(response), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -178,16 +178,47 @@ def process_text_endpoint():
         response_dict = json.loads(response)
 
         # Extract the values from the response
+        title = response_dict["response"].get('title', 'Untitled Complaint')
         complaint_text = "Yes" if response_dict["response"].get('complaint', False) else "No"
         summary = response_dict["response"].get('summary', '')
         issue = response_dict["response"].get('issue', '')
         subissue = response_dict["response"].get('sub-issue', '')
         print(response)
 
-        store_complaint_in_db(user_id, complaint_text, summary, issue, subissue) # Store the complaint in the MySQL database
+        store_complaint_in_db(user_id, title, complaint_text, summary, issue, subissue) # Store the complaint in the MySQL database
         return jsonify(response), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@app.route('/api/get-complaints', methods=['GET'])
+def get_complaints():
+    auth_header = request.headers.get('Authorization')  # Get the Authorization header
+    if not auth_header:
+        return jsonify({'error': 'User not authenticated'}), 401
+
+    token = auth_header.split(" ")[1]  # Extract the token from the header
+    user_data = validate_jwt(token)
+
+    if not user_data:  # If the token is invalid or user_data is None
+        return jsonify({'error': 'Invalid or expired token'}), 401
+
+    user_id = user_data['sub']  # Extract the user ID from the validated token
+
+    try:
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor(dictionary=True)
+
+        # Fetch complaints for the user
+        cursor.execute("SELECT * FROM complaints WHERE user_id = %s ORDER BY created_at DESC", (user_id,))
+        complaints = cursor.fetchall()
+
+        cursor.close()
+        connection.close()
+
+        return jsonify(complaints), 200
+    except mysql.connector.Error as err:
+        logging.error(f"Error: {err}")
+        return jsonify({'error': 'Failed to retrieve complaints'}), 500
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))

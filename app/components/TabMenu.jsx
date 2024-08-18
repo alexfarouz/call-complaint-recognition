@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import RecordCall from './RecordCall';
 import TextInput from './TextInput';
 import Navbar from '../components/Navbar';
+import ComplaintsDropdown from './ComplaintsDropdown';
 
 export default function TabMenu() {
   const [activeTab, setActiveTab] = useState('voice'); // Default to the 'voice' tab
@@ -135,7 +136,9 @@ export default function TabMenu() {
               </motion.div>
             )}
           </AnimatePresence>
+          
         </Box>
+        <ComplaintsDropdown/>
       </div>
     </>
   );
