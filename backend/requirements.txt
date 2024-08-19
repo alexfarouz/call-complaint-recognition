@@ -6,6 +6,7 @@ PyJWT
 requests
 google-cloud-speech
 openai
-langchain
+langchain_openai
 pinecone-client
 gunicorn
+langchain_pinecone
