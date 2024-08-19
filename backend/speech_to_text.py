@@ -7,6 +7,10 @@ from dotenv import load_dotenv
 load_dotenv(dotenv_path='../.env.local')
 
 credentials_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
+
+if not credentials_json:
+    raise ValueError("GOOGLE_APPLICATION_CREDENTIALS_JSON environment variable is not set or is empty")
+
 credentials_info = json.loads(credentials_json)
 credentials = service_account.Credentials.from_service_account_info(credentials_info)
 
