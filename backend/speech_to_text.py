@@ -4,9 +4,12 @@ from google.cloud import speech
 from google.oauth2 import service_account
 from dotenv import load_dotenv
 
-load_dotenv(dotenv_path='../.env.local')
+load_dotenv(dotenv_path='.env.local')
 
 credentials_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
+os.environ['GOOGLE_APPLICATION_CREDENTIALS_JSON'] = credentials_json
+
+print(credentials_json)
 
 if not credentials_json:
     raise ValueError("GOOGLE_APPLICATION_CREDENTIALS_JSON environment variable is not set or is empty")
