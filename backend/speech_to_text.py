@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv(dotenv_path='.env.local')
 
 credentials_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
-os.environ['GOOGLE_APPLICATION_CREDENTIALS_JSON'] = credentials_json
+#os.environ['GOOGLE_APPLICATION_CREDENTIALS_JSON'] = credentials_json
 
 print(credentials_json)
 
